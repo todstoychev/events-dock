@@ -9,7 +9,7 @@ from os import path
 
 from setuptools import setup, find_packages
 
-from containers_dock.utils import Config
+from events_dock.utils import Config
 
 here = path.abspath(path.dirname(__file__))
 
