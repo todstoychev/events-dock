@@ -24,8 +24,8 @@ class App:
 
         events_thread = EventsThread(self.__client)
         events_thread.start(priority=1)
-        SignalDispatcher.register_signal('docker_event', events_thread.docker_event)
-        SignalDispatcher.register_handler('docker_event', self.__main_widget.on_event)
+        SignalDispatcher.register_signal('events_dock.docker_event', events_thread.docker_event)
+        SignalDispatcher.register_handler('events_dock.docker_event', self.__main_widget.on_event)
 
         SignalDispatcher.dispatch()
 

@@ -52,12 +52,12 @@ class Events(QWidget):
         self.__end_date.setMinimumDateTime(self.__start_date.dateTime())
 
         # Filter events
-        SignalDispatcher.register_signal('start_date_changed', self.__start_date.dateChanged)
-        SignalDispatcher.register_handler('start_date_changed', self.on_start_date_changed)
-        SignalDispatcher.register_signal('clear_filter', self.__clear.clicked)
-        SignalDispatcher.register_handler('clear_filter', self.on_clear)
-        SignalDispatcher.register_signal('filter', self.__filter.clicked)
-        SignalDispatcher.register_handler('filter', self.on_filter)
+        SignalDispatcher.register_signal('events_dock.start_date_changed', self.__start_date.dateChanged)
+        SignalDispatcher.register_handler('events_dock.start_date_changed', self.on_start_date_changed)
+        SignalDispatcher.register_signal('events_dock.clear_filter', self.__clear.clicked)
+        SignalDispatcher.register_handler('events_dock.clear_filter', self.on_clear)
+        SignalDispatcher.register_signal('events_dock.filter', self.__filter.clicked)
+        SignalDispatcher.register_handler('events_dock.filter', self.on_filter)
 
         self.__layout.addLayout(row)
         self.__layout.addWidget(self.__events_table)
