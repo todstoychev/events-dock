@@ -7,6 +7,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QTableWidget, QWidget, QTableWidgetItem, QAbstractItemView, QDateTimeEdit, \
     QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QCalendarWidget
 from docker import DockerClient
+from signal_dispatcher.signal_dispatcher import SignalDispatcher
 
 from events_dock.mappers import EventMapper
 from events_dock.models import Event
@@ -51,9 +52,12 @@ class Events(QWidget):
         self.__end_date.setMinimumDateTime(self.__start_date.dateTime())
 
         # Filter events
-        self.__start_date.dateChanged.connect(self.on_start_date_changed)
-        self.__clear.clicked.connect(self.on_clear)
-        self.__filter.clicked.connect(self.on_filter)
+        SignalDispatcher.register_signal('start_date_changed', self.__start_date.dateChanged)
+        SignalDispatcher.register_handler('start_date_changed', self.on_start_date_changed)
+        SignalDispatcher.register_signal('clear_filter', self.__clear.clicked)
+        SignalDispatcher.register_handler('clear_filter', self.on_clear)
+        SignalDispatcher.register_signal('filter', self.__filter.clicked)
+        SignalDispatcher.register_handler('filter', self.on_filter)
 
         self.__layout.addLayout(row)
         self.__layout.addWidget(self.__events_table)
@@ -82,7 +86,6 @@ class Events(QWidget):
 
     @pyqtSlot(Event, name='docker_event')
     def on_filter_event(self, event: Event):
-        print(event)
         self.__events_table.on_event(event)
 
     @pyqtSlot(name='filter')
